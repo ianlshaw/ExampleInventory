@@ -72,3 +72,8 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+Config/DefaultGame.ini
+/Content/StarterContent
+/Content/Mannequin
+/Content/ThirdPerson/Meshes
+/Content/Geometry

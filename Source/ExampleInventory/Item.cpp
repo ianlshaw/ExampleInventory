@@ -19,6 +19,8 @@ AItem::AItem()
 
 	CollisionSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AItem::onOverlap);
 
+	CollisionSphereComp->OnComponentEndOverlap.AddDynamic(this, &AItem::onEndOverlap);
+
 	CollisionSphereComp->SetupAttachment(MeshComp);
 }
 
@@ -40,8 +42,24 @@ void AItem::onOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherAct
 {
 	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(OtherActor);
 	if (EIC != nullptr) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Found AExampleInventoryCharacter")));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onOverlap")));
+		EIC->NearbyInventory.Add(GetClass());
+		UUserWidget* inventory_as_user_widget = EIC->InventoryWidgetReference;
+		UInventoryWidget* inventory_widget_reference = Cast<UInventoryWidget>(inventory_as_user_widget);
+		inventory_widget_reference->redraw();
 	}
 	
+}
+
+void AItem::onEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(OtherActor);
+	if (EIC != nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onEndOverlap")));
+		//EIC->NearbyInventory.Remove(GetClass());
+		UUserWidget* inventory_as_user_widget = EIC->InventoryWidgetReference;
+		UInventoryWidget* inventory_widget_reference = Cast<UInventoryWidget>(inventory_as_user_widget);
+		inventory_widget_reference->redraw();
+	}
 }
 

@@ -19,10 +19,10 @@ public:
 	AItem();
 
 	UPROPERTY(EditDefaultsOnly)
-	FText name;
+	FText Name;
 
 	UPROPERTY(EditDefaultsOnly)
-	UTexture2D* icon;
+	UTexture2D* Icon;
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* MeshComp;

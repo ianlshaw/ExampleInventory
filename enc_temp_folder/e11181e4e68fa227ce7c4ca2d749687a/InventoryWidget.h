@@ -34,9 +34,6 @@ public:
 		UFUNCTION(BlueprintImplementableEvent)
 			void redraw();
 
-		UFUNCTION(BlueprintCallable)
-			void DrawInventory();
-
 
 protected:
 

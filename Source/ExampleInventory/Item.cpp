@@ -22,6 +22,8 @@ AItem::AItem()
 	CollisionSphereComp->OnComponentEndOverlap.AddDynamic(this, &AItem::onEndOverlap);
 
 	CollisionSphereComp->SetupAttachment(MeshComp);
+
+
 }
 
 // Called when the game starts or when spawned

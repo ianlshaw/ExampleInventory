@@ -37,6 +37,9 @@ public:
 		UFUNCTION(BlueprintCallable)
 			void DrawInventory();
 
+		TArray<UInventorySlotWidget*> InventorySlotWidgets;
+
+
 
 protected:
 

@@ -34,6 +34,14 @@ public:
 		UFUNCTION(BlueprintImplementableEvent)
 			void redraw();
 
+		UFUNCTION(BlueprintCallable)
+			void DrawInventory();
+
+		TArray<UInventorySlotWidget*> InventorySlotWidgets;
+
+		UFUNCTION()
+			void AddEntry(UInventorySlotWidget* ChildWidget, int row, int col);
+
 
 protected:
 

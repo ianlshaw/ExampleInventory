@@ -32,19 +32,39 @@ void UInventoryWidget::DrawInventory()
 
 
 	for (int32 Index = 0; Index != EIC->Inventory.Num(); ++Index)
-
+	//for (auto& item : EIC->Inventory)
 	{
 	
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("inside inventory loop")));
 	
 		//each_slot_widget.Name = item.Name;
-		UUserWidget* slot_widget = CreateWidget(GetOwningPlayer(), InventorySlotWidgetClass);
-
-		
-		GP_Inventory->AddChildToUniformGrid(slot_widget, Index, 0);
-
+		UUserWidget* slot_widget = CreateWidget(GetOwningPlayer(), InventorySlotWidgetClass, "GEOFF");
+		UInventorySlotWidget* slot_widget_as_uinventoryslotwidget= Cast<UInventorySlotWidget>(slot_widget);
+		//InventorySlotWidgets.Add(slot_widget_as_uinventoryslotwidget);
+		AddEntry(slot_widget_as_uinventoryslotwidget, Index, 0);
 		UE_LOG(LogTemp, Warning, TEXT("The integer value is: %d"), Index);
+
+	
 
 	}
 
+	//index = 0;
+	//for (auto& widget : InventorySlotWidgets)
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("InventorySlotWidgets")));
+	//	index++;
+	//}
+
+
+	for (auto& item : EIC->NearbyInventory)
+	{
+
+	}
 }
+
+void UInventoryWidget::AddEntry(UInventorySlotWidget* ChildWidget, int row, int col)
+{
+	GP_Inventory->AddChildToUniformGrid(ChildWidget, row, col);
+
+}
+

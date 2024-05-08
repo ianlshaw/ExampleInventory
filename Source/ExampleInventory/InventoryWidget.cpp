@@ -32,7 +32,6 @@ void UInventoryWidget::DrawInventory()
 
 
 	for (int32 Index = 0; Index != EIC->Inventory.Num(); ++Index)
-
 	{
 	
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("inside inventory loop")));
@@ -43,8 +42,14 @@ void UInventoryWidget::DrawInventory()
 		
 		GP_Inventory->AddChildToUniformGrid(slot_widget, Index, 0);
 
-		UE_LOG(LogTemp, Warning, TEXT("The integer value is: %d"), Index);
+		//UE_LOG(LogTemp, Warning, TEXT("The integer value is: %d"), Index);
 
+	}
+
+	for (int32 Index = 0; Index != EIC->NearbyInventory.Num(); ++Index)
+	{
+		UUserWidget* slot_widget = CreateWidget(GetOwningPlayer(), InventorySlotWidgetClass);
+		GP_NearbyInventory->AddChildToUniformGrid(slot_widget, Index, 0);
 	}
 
 }

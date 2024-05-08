@@ -19,6 +19,9 @@ class EXAMPLEINVENTORY_API UInventorySlotWidget : public UUserWidget
 	
 public:
 
+	/** Widget constructor. */
+	UInventorySlotWidget(const FObjectInitializer& ObjectInitializer);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UTexture2D* Icon;
 
@@ -36,5 +39,11 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 		UImage* ImageIcon;
+
+	UFUNCTION()
+		virtual void NativeConstruct();
+
+	UFUNCTION()
+		void OnClick();
 
 };

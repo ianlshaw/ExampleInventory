@@ -16,14 +16,9 @@ AItem::AItem()
 	MeshComp->SetSimulatePhysics(true);
 
 	CollisionSphereComp = CreateDefaultSubobject<USphereComponent>("SphereCollider");
-
 	CollisionSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AItem::onOverlap);
-
 	CollisionSphereComp->OnComponentEndOverlap.AddDynamic(this, &AItem::onEndOverlap);
-
 	CollisionSphereComp->SetupAttachment(MeshComp);
-
-
 }
 
 // Called when the game starts or when spawned
@@ -42,26 +37,33 @@ void AItem::Tick(float DeltaTime)
 
 void AItem::onOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onOverlap")));
+
 	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(OtherActor);
 	if (EIC != nullptr) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onOverlap")));
 		EIC->NearbyInventory.Add(GetClass());
 		UUserWidget* inventory_as_user_widget = EIC->InventoryWidgetReference;
 		UInventoryWidget* inventory_widget_reference = Cast<UInventoryWidget>(inventory_as_user_widget);
-		inventory_widget_reference->redraw();
+		inventory_widget_reference->DrawInventory();
 	}
-	
 }
 
 void AItem::onEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onEndOverlap")));
+
 	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(OtherActor);
 	if (EIC != nullptr) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onEndOverlap")));
-		//EIC->NearbyInventory.Remove(GetClass());
+		int item_index = EIC->NearbyInventory.FindLast(GetClass());
+		UE_LOG(LogTemp, Warning, TEXT("item_index is: %d"), item_index);
+
+		EIC->NearbyInventory.RemoveAt(item_index);
+		//int removed_index = EIC->NearbyInventory.RemoveAt(item_index);
+
 		UUserWidget* inventory_as_user_widget = EIC->InventoryWidgetReference;
 		UInventoryWidget* inventory_widget_reference = Cast<UInventoryWidget>(inventory_as_user_widget);
-		inventory_widget_reference->redraw();
+		//inventory_widget_reference->GP_NearbyInventory->RemoveChildAt(removed_index);
+		inventory_widget_reference->GP_NearbyInventory->ClearChildren();
+		inventory_widget_reference->DrawInventory();
 	}
 }
-

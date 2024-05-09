@@ -19,5 +19,8 @@ void UInventorySlotWidget::NativeConstruct()
 
 void UInventorySlotWidget::OnClick()
 {
+	
 	UE_LOG(LogTemp, Warning, TEXT("Click"));
+	//UE_LOG(LogTemp, Warning, TEXT("The integer value is: %d"), );
+
 }

@@ -31,25 +31,34 @@ void UInventoryWidget::DrawInventory()
 	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(owning_player_pawn);
 
 
+	// Loop around the conventional inventory and add each element to the grid panel
 	for (int32 Index = 0; Index != EIC->Inventory.Num(); ++Index)
 	{
-	
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("inside inventory loop")));
-	
-		//each_slot_widget.Name = item.Name;
-		UUserWidget* slot_widget = CreateWidget(GetOwningPlayer(), InventorySlotWidgetClass);
-
-		
-		GP_Inventory->AddChildToUniformGrid(slot_widget, Index, 0);
-
-		//UE_LOG(LogTemp, Warning, TEXT("The integer value is: %d"), Index);
-
+		TSubclassOf<AItem> aitem_subclass = EIC->NearbyInventory[Index];
+		AItem* item_as_item = aitem_subclass.GetDefaultObject();
+		AddItemToGridPanel(GP_Inventory, item_as_item, Index);
 	}
 
+	// Loop around the characters NearbyInventory and add each element to the nearby inventory grid panel
 	for (int32 Index = 0; Index != EIC->NearbyInventory.Num(); ++Index)
-	{
-		UUserWidget* slot_widget = CreateWidget(GetOwningPlayer(), InventorySlotWidgetClass);
-		GP_NearbyInventory->AddChildToUniformGrid(slot_widget, Index, 0);
+	{		
+		TSubclassOf<AItem> aitem_subclass = EIC->NearbyInventory[Index];
+		AItem* item_as_item = aitem_subclass.GetDefaultObject();
+		AddItemToGridPanel(GP_NearbyInventory, item_as_item, Index);
 	}
+}
 
+void UInventoryWidget::AddItemToGridPanel(UUniformGridPanel* GridPanel, AItem* Item, int Row)
+{
+	// Create widget from inventory slot class defined in the editor.
+	UUserWidget* item_slot_as_user_widget = CreateWidget(GetOwningPlayer(), InventorySlotWidgetClass);
+
+	// Convert it to custom class, so we get access to member variables.
+	UInventorySlotWidget* item_slot_as_inventory_slot_widget = Cast<UInventorySlotWidget>(item_slot_as_user_widget);
+
+	// Set the name of the item according to the class.
+	item_slot_as_inventory_slot_widget->TextBlockName->SetText(Item->ItemName);
+
+	// Add the slot widget to the inventory grid panel
+	GridPanel->AddChildToUniformGrid(item_slot_as_inventory_slot_widget, Row, 0);
 }

@@ -23,10 +23,10 @@ public:
 	UInventorySlotWidget(const FObjectInitializer& ObjectInitializer);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		UTexture2D* Icon;
+		UTexture2D* ItemIcon;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		FText Name;
+		FText ItemName;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 		UButton* ButtonIcon;
@@ -39,6 +39,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 		UImage* ImageIcon;
+
+	UPROPERTY()
+		AActor* AssociatedActor;
 
 	UFUNCTION()
 		virtual void NativeConstruct();

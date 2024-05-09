@@ -37,6 +37,10 @@ public:
 		UFUNCTION(BlueprintCallable)
 			void DrawInventory();
 
+		UFUNCTION()
+			void AddItemToGridPanel(UUniformGridPanel* GridPanel, AItem* Item, int Row);
+
+
 		TArray<UInventorySlotWidget*> InventorySlotWidgets;
 
 

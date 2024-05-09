@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/UniformGridSlot.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
@@ -25,14 +26,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UTexture2D* ItemIcon;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		FText ItemName;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-		UButton* ButtonIcon;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
-		UButton* ButtonText;
+		UButton* ButtonItem;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
 		UTextBlock* TextBlockName;
@@ -41,7 +36,16 @@ public:
 		UImage* ImageIcon;
 
 	UPROPERTY()
-		AActor* AssociatedActor;
+		int SlotIndex;
+
+	UPROPERTY()
+		class AExampleInventoryCharacter* Character;
+
+	UPROPERTY()
+		FString parent_name;
+
+	//UPROPERTY()
+//		AItem* AssociatedItem;
 
 	UFUNCTION()
 		virtual void NativeConstruct();

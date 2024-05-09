@@ -42,6 +42,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UUserWidget* InventoryWidgetReference;
 
+	UPROPERTY()
+	TArray <AActor*> OverlappingItems;
+
+	UFUNCTION()
+		void DropItem(int item_index);
+
 protected:
 
 	/** Resets HMD orientation in VR. */

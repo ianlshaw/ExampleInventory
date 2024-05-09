@@ -2,6 +2,7 @@
 
 
 #include "InventorySlotWidget.h"
+#include "ExampleInventoryCharacter.h"
 
 UInventorySlotWidget::UInventorySlotWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -12,15 +13,23 @@ void UInventorySlotWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	ButtonIcon->OnClicked.AddDynamic(this, &UInventorySlotWidget::OnClick);
-    ButtonText->OnClicked.AddDynamic(this, &UInventorySlotWidget::OnClick);
+	ButtonItem->OnClicked.AddDynamic(this, &UInventorySlotWidget::OnClick);
+
+	Character = Cast<AExampleInventoryCharacter>(GetOwningPlayerPawn());
+
+	parent_name = GetParent()->GetDisplayLabel();
 }
 
 
 void UInventorySlotWidget::OnClick()
 {
+	if (parent_name == "GP_NearbyInventory") {
 	
-	UE_LOG(LogTemp, Warning, TEXT("Click"));
-	//UE_LOG(LogTemp, Warning, TEXT("The integer value is: %d"), );
+		AActor* AssociatedActor = Character->OverlappingItems[SlotIndex];
+		//Character->Inventory.Add();
+		AssociatedActor->Destroy();
+	}
+	
+	//Character->DropItem(SlotIndex);
 
 }

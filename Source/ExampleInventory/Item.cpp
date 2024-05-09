@@ -45,6 +45,8 @@ void AItem::onOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherAct
 		UUserWidget* inventory_as_user_widget = EIC->InventoryWidgetReference;
 		UInventoryWidget* inventory_widget_reference = Cast<UInventoryWidget>(inventory_as_user_widget);
 		inventory_widget_reference->DrawInventory();
+
+		EIC->OverlappingItems.Add(this);
 	}
 }
 
@@ -52,10 +54,14 @@ void AItem::onEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onEndOverlap")));
 
+	// Create a pointer to the player character
 	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(OtherActor);
+
+	// Ensure the pointer is not null
 	if (EIC != nullptr) {
 		int item_index = EIC->NearbyInventory.FindLast(GetClass());
-		UE_LOG(LogTemp, Warning, TEXT("item_index is: %d"), item_index);
+		
+		//UE_LOG(LogTemp, Warning, TEXT("item_index is: %d"), item_index);
 
 		EIC->NearbyInventory.RemoveAt(item_index);
 		//int removed_index = EIC->NearbyInventory.RemoveAt(item_index);
@@ -65,5 +71,7 @@ void AItem::onEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		//inventory_widget_reference->GP_NearbyInventory->RemoveChildAt(removed_index);
 		inventory_widget_reference->GP_NearbyInventory->ClearChildren();
 		inventory_widget_reference->DrawInventory();
+
+		EIC->OverlappingItems.RemoveAt(item_index);
 	}
 }

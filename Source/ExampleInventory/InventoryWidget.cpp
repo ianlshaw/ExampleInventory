@@ -60,6 +60,10 @@ void UInventoryWidget::AddItemToGridPanel(UUniformGridPanel* GridPanel, AItem* I
 	// Set the icon of the item according to the class.
 	item_slot_as_inventory_slot_widget->ImageIcon->SetBrushFromTexture(Item->ItemIcon, true);
 
+	//item_slot_as_inventory_slot_widget->AssociatedItem = Item;
+
+	item_slot_as_inventory_slot_widget->SlotIndex = Row;
+
 	// Add the slot widget to the inventory grid panel
 	GridPanel->AddChildToUniformGrid(item_slot_as_inventory_slot_widget, Row, 0);
 }

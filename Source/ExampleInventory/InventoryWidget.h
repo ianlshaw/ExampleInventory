@@ -41,10 +41,6 @@ public:
 			void AddItemToGridPanel(UUniformGridPanel* GridPanel, AItem* Item, int Row);
 
 
-		TArray<UInventorySlotWidget*> InventorySlotWidgets;
-
-
-
 protected:
 
 	/** Class to use for inventory cells. */

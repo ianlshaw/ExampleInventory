@@ -77,6 +77,18 @@ void AExampleInventoryCharacter::SetupPlayerInputComponent(class UInputComponent
 }
 
 
+void AExampleInventoryCharacter::DropItem(int item_index)
+{
+	if (!Inventory.IsValidIndex(item_index)) {
+		UE_LOG(LogTemp, Error, TEXT("DropItem invalid item_index"));
+		return;
+	}
+
+	FTransform spawn_transform;
+	FActorSpawnParameters spawn_params;
+	//GetWorld()->SpawnActor(Inventory[item_index], spawn_transform, spawn_params);
+}
+
 void AExampleInventoryCharacter::OnResetVR()
 {
 	// If ExampleInventory is added to a project via 'Add Feature' in the Unreal Editor the dependency on HeadMountedDisplay in ExampleInventory.Build.cs is not automatically propagated

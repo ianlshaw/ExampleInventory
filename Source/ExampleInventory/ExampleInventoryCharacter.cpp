@@ -164,4 +164,5 @@ void AExampleInventoryCharacter::DropItem(int item_index)
 
 void AExampleInventoryCharacter::PickupItem(int item_index)
 {
+	Inventory.Add(NearbyInventory[item_index]);
 }

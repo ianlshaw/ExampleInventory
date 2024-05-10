@@ -52,25 +52,22 @@ void AItem::onOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherAct
 
 void AItem::onEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("AItem::onEndOverlap")));
-
 	// Create a pointer to the player character
 	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(OtherActor);
 
 	// Ensure the pointer is not null
 	if (EIC != nullptr) {
-		int item_index = EIC->NearbyInventory.FindLast(GetClass());
-		
+
+
+		int item_index = EIC->OverlappingItems.IndexOfByKey(this);
+
 		EIC->NearbyInventory.RemoveAt(item_index);
 		EIC->OverlappingItems.RemoveAt(item_index);
 
 		UUserWidget* inventory_as_user_widget = EIC->InventoryWidgetReference;
 		UInventoryWidget* inventory_widget_reference = Cast<UInventoryWidget>(inventory_as_user_widget);
-		UE_LOG(LogTemp, Warning, TEXT("item_index is: %d"), item_index);
 		//inventory_widget_reference->GP_NearbyInventory->RemoveChildAt(item_index);
 		inventory_widget_reference->GP_NearbyInventory->ClearChildren();
 		inventory_widget_reference->DrawInventory();
-
-	
 	}
 }

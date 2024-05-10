@@ -18,15 +18,11 @@ void UInventoryWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Hi from UInventoryWidget::construct")));
 	DrawInventory();
 }
 
 void UInventoryWidget::DrawInventory()
 {
-	
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Hi from UInventoryWidget::DrawInventory")));
-
 	APawn* owning_player_pawn = GetOwningPlayerPawn();
 	AExampleInventoryCharacter* EIC = Cast<AExampleInventoryCharacter>(owning_player_pawn);
 
@@ -60,8 +56,10 @@ void UInventoryWidget::AddItemToGridPanel(UUniformGridPanel* GridPanel, AItem* I
 	// Set the icon of the item according to the class.
 	item_slot_as_inventory_slot_widget->ImageIcon->SetBrushFromTexture(Item->ItemIcon, true);
 
+	// Set the spawned actor object reference, so we can destroy it when we pick it up.
 	item_slot_as_inventory_slot_widget->AssociatedItem = Item;
 
+	// This index corresponds to the Inventory, NearbyInventory and OverlappingItems TArrays
 	item_slot_as_inventory_slot_widget->SlotIndex = Row;
 
 	// Add the slot widget to the inventory grid panel

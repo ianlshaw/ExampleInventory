@@ -76,6 +76,29 @@ void AExampleInventoryCharacter::SetupPlayerInputComponent(class UInputComponent
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AExampleInventoryCharacter::OnResetVR);
 }
 
+
+void AExampleInventoryCharacter::DropItem(int item_index)
+{
+	if (!Inventory.IsValidIndex(item_index)) {
+		UE_LOG(LogTemp, Error, TEXT("DropItem invalid item_index"));
+		return;
+	}
+
+	
+	
+	FVector ActorLocation = GetActorLocation();
+	FVector ForwardVector = GetActorForwardVector();
+	FVector OffsetVector = ForwardVector * 200;
+	FVector SpawnLocation = ActorLocation + OffsetVector;
+
+	FTransform spawn_transform;
+	spawn_transform.SetLocation(SpawnLocation);
+
+	GetWorld()->SpawnActor<AActor>(Inventory[item_index], spawn_transform);
+
+	Inventory.RemoveAt(item_index);
+}
+
 void AExampleInventoryCharacter::OnResetVR()
 {
 	// If ExampleInventory is added to a project via 'Add Feature' in the Unreal Editor the dependency on HeadMountedDisplay in ExampleInventory.Build.cs is not automatically propagated
@@ -136,32 +159,4 @@ void AExampleInventoryCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
-}
-
-void AExampleInventoryCharacter::DropItem(int item_index)
-{
-	if (!Inventory.IsValidIndex(item_index)) {
-		UE_LOG(LogTemp, Error, TEXT("DropItem invalid item_index"));
-		return;
-	}
-
-	FVector ActorLocation = GetActorLocation();
-	FVector ForwardVector = GetActorForwardVector();
-	FVector OffsetVector = ForwardVector * 200;
-	FVector SpawnLocation = ActorLocation + OffsetVector;
-
-	FTransform spawn_transform;
-	spawn_transform.SetLocation(SpawnLocation);
-
-	GetWorld()->SpawnActor<AActor>(Inventory[item_index], spawn_transform);
-
-	Inventory.RemoveAt(item_index);
-
-	UInventoryWidget* InventoryWidget = Cast<UInventoryWidget>(InventoryWidgetReference);
-	InventoryWidget->GP_Inventory->ClearChildren();
-	InventoryWidget->DrawInventory();
-}
-
-void AExampleInventoryCharacter::PickupItem(int item_index)
-{
 }

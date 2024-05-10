@@ -48,9 +48,6 @@ public:
 	UFUNCTION()
 		void DropItem(int item_index);
 
-	UFUNCTION()
-		void PickupItem(int item_index);
-
 protected:
 
 	/** Resets HMD orientation in VR. */

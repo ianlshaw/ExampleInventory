@@ -2,6 +2,7 @@
 
 
 #include "InventorySlotWidget.h"
+#include "InventoryWidget.h"
 #include "ExampleInventoryCharacter.h"
 
 UInventorySlotWidget::UInventorySlotWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -43,8 +44,8 @@ void UInventorySlotWidget::OnClick()
 
 	if (parent_name == "GP_Inventory") {
 		Character->DropItem(SlotIndex);
+
 	}
 	
-	//Character->DropItem(SlotIndex);
 
 }

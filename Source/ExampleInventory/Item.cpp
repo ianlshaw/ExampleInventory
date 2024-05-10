@@ -61,17 +61,16 @@ void AItem::onEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 	if (EIC != nullptr) {
 		int item_index = EIC->NearbyInventory.FindLast(GetClass());
 		
-		//UE_LOG(LogTemp, Warning, TEXT("item_index is: %d"), item_index);
-
 		EIC->NearbyInventory.RemoveAt(item_index);
-		//int removed_index = EIC->NearbyInventory.RemoveAt(item_index);
+		EIC->OverlappingItems.RemoveAt(item_index);
 
 		UUserWidget* inventory_as_user_widget = EIC->InventoryWidgetReference;
 		UInventoryWidget* inventory_widget_reference = Cast<UInventoryWidget>(inventory_as_user_widget);
-		//inventory_widget_reference->GP_NearbyInventory->RemoveChildAt(removed_index);
+		UE_LOG(LogTemp, Warning, TEXT("item_index is: %d"), item_index);
+		//inventory_widget_reference->GP_NearbyInventory->RemoveChildAt(item_index);
 		inventory_widget_reference->GP_NearbyInventory->ClearChildren();
 		inventory_widget_reference->DrawInventory();
 
-		EIC->OverlappingItems.RemoveAt(item_index);
+	
 	}
 }

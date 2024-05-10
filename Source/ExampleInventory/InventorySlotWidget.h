@@ -44,11 +44,13 @@ public:
 	UPROPERTY()
 		FString parent_name;
 
-	//UPROPERTY()
-//		AItem* AssociatedItem;
+	UPROPERTY()
+		class AItem* AssociatedItem;
 
 	UFUNCTION()
 		virtual void NativeConstruct();
+
+		virtual void NativeOnInitialized();
 
 	UFUNCTION()
 		void OnClick();

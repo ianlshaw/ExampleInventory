@@ -86,7 +86,9 @@ void AExampleInventoryCharacter::DropItem(int item_index)
 
 	FTransform spawn_transform;
 	FActorSpawnParameters spawn_params;
-	//GetWorld()->SpawnActor(Inventory[item_index], spawn_transform, spawn_params);
+
+
+	GetWorld()->SpawnActor<AActor>(Inventory[item_index], spawn_transform);
 }
 
 void AExampleInventoryCharacter::OnResetVR()

@@ -71,6 +71,8 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
+	void ToggleInventory();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

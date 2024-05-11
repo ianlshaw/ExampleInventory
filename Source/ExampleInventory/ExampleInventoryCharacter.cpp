@@ -57,6 +57,8 @@ void AExampleInventoryCharacter::SetupPlayerInputComponent(class UInputComponent
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
+	PlayerInputComponent->BindAction("ToggleInventory", IE_Pressed, this, &AExampleInventoryCharacter::ToggleInventory);
+
 	PlayerInputComponent->BindAxis("MoveForward", this, &AExampleInventoryCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AExampleInventoryCharacter::MoveRight);
 
@@ -107,6 +109,30 @@ void AExampleInventoryCharacter::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+	}
+}
+
+void AExampleInventoryCharacter::ToggleInventory()
+{
+	
+	AController* BaseController = GetController();
+	APlayerController* PlayerController = Cast<APlayerController>(BaseController);
+
+	if (IsInventoryShown)
+	{
+		InventoryWidgetReference->RemoveFromParent();
+		IsInventoryShown = false;
+		FInputModeGameOnly mode;
+		PlayerController->SetInputMode(mode);
+		PlayerController->SetShowMouseCursor(false);
+	}
+	else 
+	{
+		InventoryWidgetReference->AddToViewport();
+		IsInventoryShown = true;
+		FInputModeGameAndUI mode;
+		PlayerController->SetInputMode(mode);
+		PlayerController->SetShowMouseCursor(true);
 	}
 }
 

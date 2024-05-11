@@ -13,12 +13,18 @@ AItem::AItem()
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
 	RootComponent = MeshComp;
 
-	MeshComp->SetSimulatePhysics(true);
+	SkeletalMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>("SkeletalMeshComponent");
+	SkeletalMeshComp->SetupAttachment(MeshComp);
+	SkeletalMeshComp->SetUsingAbsoluteScale(true);
 
-	CollisionSphereComp = CreateDefaultSubobject<USphereComponent>("SphereCollider");
-	CollisionSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AItem::onOverlap);
-	CollisionSphereComp->OnComponentEndOverlap.AddDynamic(this, &AItem::onEndOverlap);
-	CollisionSphereComp->SetupAttachment(MeshComp);
+	MeshComp->SetSimulatePhysics(true);
+	MeshComp->SetHiddenInGame(true);
+
+	CollisionBoxComp = CreateDefaultSubobject<UBoxComponent>("BoxCollider");
+	CollisionBoxComp->OnComponentBeginOverlap.AddDynamic(this, &AItem::onOverlap);
+	CollisionBoxComp->OnComponentEndOverlap.AddDynamic(this, &AItem::onEndOverlap);
+	CollisionBoxComp->SetupAttachment(MeshComp);
+	CollisionBoxComp->SetUsingAbsoluteScale(true);
 }
 
 // Called when the game starts or when spawned

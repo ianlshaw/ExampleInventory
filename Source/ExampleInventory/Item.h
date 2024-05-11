@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Engine/Texture2D.h"
 #include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
 #include "InventoryWidget.h"
 #include "Item.generated.h"
 
@@ -27,8 +28,11 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* MeshComp;
 
+	UPROPERTY(EditDefaultsOnly)
+	USkeletalMeshComponent* SkeletalMeshComp;
+
 	UPROPERTY(VisibleAnywhere)
-	USphereComponent* CollisionSphereComp;
+		UBoxComponent* CollisionBoxComp;
 
 
 protected:

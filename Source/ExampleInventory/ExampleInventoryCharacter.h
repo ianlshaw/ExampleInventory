@@ -22,6 +22,8 @@ class AExampleInventoryCharacter : public ACharacter
 public:
 	AExampleInventoryCharacter();
 
+	virtual void BeginPlay();
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
@@ -31,13 +33,16 @@ public:
 	float BaseLookUpRate;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-		TArray <TSubclassOf <AItem>> Inventory;
+	TArray <TSubclassOf <AItem>> Inventory;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-		TArray <TSubclassOf <AItem>> NearbyInventory;
+	TArray <TSubclassOf <AItem>> NearbyInventory;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		bool IsInventoryShown = false;
+	bool IsInventoryShown = false;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> InventoryWidgetClass;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UUserWidget* InventoryWidgetReference;
@@ -46,10 +51,10 @@ public:
 	TArray <AActor*> OverlappingItems;
 
 	UFUNCTION()
-		void DropItem(int item_index);
+	void DropItem(int item_index);
 
 	UFUNCTION()
-		void PickupItem(int item_index);
+	void PickupItem(int item_index);
 
 protected:
 

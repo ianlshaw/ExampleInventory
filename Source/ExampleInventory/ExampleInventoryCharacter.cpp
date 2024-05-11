@@ -47,6 +47,14 @@ AExampleInventoryCharacter::AExampleInventoryCharacter()
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
 
+void AExampleInventoryCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	InventoryWidgetReference = CreateWidget(PlayerController, InventoryWidgetClass);
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -145,7 +153,7 @@ void AExampleInventoryCharacter::DropItem(int item_index)
 
 	FVector ActorLocation = GetActorLocation();
 	FVector ForwardVector = GetActorForwardVector();
-	FVector OffsetVector = ForwardVector * 200;
+	FVector OffsetVector = ForwardVector * 50;
 	FVector SpawnLocation = ActorLocation + OffsetVector;
 
 	FTransform spawn_transform;

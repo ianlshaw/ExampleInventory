@@ -14,7 +14,7 @@ void UInventorySlotWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	Character = Cast<AExampleInventoryCharacter>(GetOwningPlayerPawn());
-	parent_name = GetParent()->GetDisplayLabel();
+	parent_name = GetParent()->GetName();
 }
 
 void UInventorySlotWidget::NativeOnInitialized()
